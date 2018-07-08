@@ -1,0 +1,7 @@
+#Embedded Local MongoDB config
+spring:
+  data:
+    mongodb:
+      database: ef-db
+      port: 0 # random port
+      host: 127.0.0.1
