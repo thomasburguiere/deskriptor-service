@@ -1,0 +1,9 @@
+# Local MongoDB config
+spring:
+  data:
+    mongodb:
+      database: desk-db
+      port: 27017
+      host: 127.0.0.1
+      username: local-desk
+      password: local-desk
