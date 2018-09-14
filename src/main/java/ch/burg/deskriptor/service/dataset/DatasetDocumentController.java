@@ -1,7 +1,11 @@
 package ch.burg.deskriptor.service.dataset;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +28,11 @@ public class DatasetDocumentController {
     @GetMapping(value = "/{datasetId}")
     public DatasetDocument get(@PathVariable final String datasetId) {
         return datasetDocumentRepository.findById(datasetId).get();
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> post(@RequestBody final DatasetDocument datasetDocument){
+        datasetDocumentRepository.save(datasetDocument);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
