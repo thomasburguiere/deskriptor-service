@@ -16,7 +16,7 @@ public class DatasetDocument {
     @Id
     private String id;
 
-    @JsonDeserialize(using = DatasetDeserializer.class)
+//    @JsonDeserialize(using = DatasetDeserializer.class)
     private final Dataset dataset;
 
 }

@@ -115,11 +115,6 @@ public class DatasetDocumentControllerIntegrationTest {
 
         final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
 
-
-        // items
-        assertThat(datasetDocument.getDataset().getItems()).isNotNull();
-        assertThat(datasetDocument.getDataset().getItems()).isEmpty();
-
         // descriptors
         assertThat(datasetDocument.getDataset().getDescriptors()).isNotNull();
         assertThat(datasetDocument.getDataset().getDescriptors()).hasSize(1);
@@ -147,14 +142,101 @@ public class DatasetDocumentControllerIntegrationTest {
 
         final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
 
-
         // items
-        assertThat(datasetDocument.getDataset().getDescriptors()).isNotNull();
-        assertThat(datasetDocument.getDataset().getDescriptors()).isEmpty();
-
-
-        // descriptors
         assertThat(datasetDocument.getDataset().getItems()).isNotNull();
         assertThat(datasetDocument.getDataset().getItems()).hasSize(1);
     }
+
+    @Test
+    public void should_deserialize_dataset_with_discreteDescriptors_with_empty_states() throws Exception {
+        // given
+        final String json = "{" +
+                "   \"id\":\"kurwa\"," +
+                "   \"dataset\": {" +
+                "       \"descriptors\": [{" +
+                "          \"id\":\"discrete desc\"," +
+                "          \"name\":\"discrete desc\"," +
+                "          \"possibleStates\": []" +
+                "       }]," +
+                "       \"items\": [{" +
+                "           \"name\": \"item\"" +
+                "       }]," +
+                "       \"descriptorDependencyNodes\": null" +
+                "   }" +
+                "}";
+
+        // when / then
+        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
+
+        final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
+        assertThat(datasetDocument.getDataset().getDescriptors()).isNotNull();
+        assertThat(datasetDocument.getDataset().getDescriptors()).isNotEmpty();
+
+        final DiscreteDescriptor descr = (DiscreteDescriptor) datasetDocument.getDataset().getDescriptors().iterator().next();
+        assertThat(descr.getId()).isEqualTo("discrete desc");
+        assertThat(descr.getName()).isEqualTo("discrete desc");
+        assertThat(descr.getPossibleSates()).hasSize(0);
+
+        // items
+        assertThat(datasetDocument.getDataset().getItems().iterator().hasNext()).isTrue();
+        assertThat(datasetDocument.getDataset().getItems().iterator().next().getName()).isEqualTo("item");
+    }
+
+
+    @Test
+    public void should_deserialize_dataset_with_discreteDescriptors_with_null_states() throws Exception {
+        // given
+        final String json = "{" +
+                "   \"id\":\"kurwa\"," +
+                "   \"dataset\": {" +
+                "       \"descriptors\": [{" +
+                "          \"id\":\"discrete desc\"," +
+                "          \"name\":\"discrete desc\"," +
+                "          \"possibleStates\": null" +
+                "       }]," +
+                "       \"items\": [{" +
+                "           \"name\": \"item\"" +
+                "       }]," +
+                "       \"descriptorDependencyNodes\": null" +
+                "   }" +
+                "}";
+
+        // when / then
+        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
+
+        final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
+        assertThat(datasetDocument.getDataset().getDescriptors()).isNotNull();
+        assertThat(datasetDocument.getDataset().getDescriptors()).isNotEmpty();
+
+        final DiscreteDescriptor descr = (DiscreteDescriptor) datasetDocument.getDataset().getDescriptors().iterator().next();
+        assertThat(descr.getId()).isEqualTo("discrete desc");
+        assertThat(descr.getName()).isEqualTo("discrete desc");
+        assertThat(descr.getPossibleSates()).hasSize(0);
+
+        // items
+        assertThat(datasetDocument.getDataset().getItems().iterator().hasNext()).isTrue();
+        assertThat(datasetDocument.getDataset().getItems().iterator().next().getName()).isEqualTo("item");
+    }
+
+    @Test
+    public void should_return_400_when_unable_to_infer_descriptor_concrete_type_from_json_content() throws Exception {// given
+        final String json = "{" +
+                "   \"id\":\"kurwa\"," +
+                "   \"dataset\": {" +
+                "       \"descriptors\": [{" +
+                "          \"id\":\"discrete desc\"," +
+                "          \"name\":\"discrete desc\"" +
+                "       }]," +
+                "       \"items\": [{" +
+                "           \"name\": \"item\"" +
+                "       }]," +
+                "       \"descriptorDependencyNodes\": null" +
+                "   }" +
+                "}";
+
+        // when / then
+        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());}
 }
