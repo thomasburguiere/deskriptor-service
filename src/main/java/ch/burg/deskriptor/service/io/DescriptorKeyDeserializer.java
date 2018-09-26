@@ -1,4 +1,4 @@
-package ch.burg.deskriptor.io;
+package ch.burg.deskriptor.service.io;
 
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.KeyDeserializer;

@@ -1,4 +1,4 @@
-package ch.burg.deskriptor.io;
+package ch.burg.deskriptor.service.io;
 
 import ch.burg.deskriptor.engine.model.State;
 import ch.burg.deskriptor.engine.model.descriptor.Descriptor;

@@ -238,5 +238,6 @@ public class DatasetDocumentControllerIntegrationTest {
 
         // when / then
         mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
-                .andExpect(status().is4xxClientError());}
+                .andExpect(status().is4xxClientError());
+    }
 }
