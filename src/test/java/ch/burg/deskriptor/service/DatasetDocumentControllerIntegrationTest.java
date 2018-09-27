@@ -1,5 +1,6 @@
 package ch.burg.deskriptor.service;
 
+import ch.burg.deskriptor.engine.model.Dataset;
 import ch.burg.deskriptor.service.dataset.DatasetDocument;
 import ch.burg.deskriptor.service.dataset.DatasetDocumentRepository;
 import org.junit.Before;
@@ -10,6 +11,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Collections;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,6 +55,18 @@ public class DatasetDocumentControllerIntegrationTest {
         // when / then
         mockMvc.perform(get(DATASET_BASE_URI + "/doesntExistsId"))
             .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void should_get_datasetDocument() throws Exception {
+        // given
+        final Dataset emptyDataset = new Dataset(Set.of(), Set.of(), Collections.emptyList());
+        final DatasetDocument datasetDocument = new DatasetDocument(emptyDataset, "datasetId");
+        datasetDocumentRepository.save(datasetDocument);
+
+        // when / then
+        mockMvc.perform(get(DATASET_BASE_URI + "/datasetId"))
+            .andExpect(status().is2xxSuccessful());
 
     }
 

@@ -41,24 +41,21 @@ public class DatasetDeserializationIntegrationTest {
         // given
         //language=JSON
         final String json = "{" +
-                "   \"id\":\"kurwa\"," +
-                "   \"dataset\": {" +
-                "       \"descriptors\": [{" +
-                "          \"id\":\"discrete desc\"," +
-                "          \"name\":\"discrete desc\"," +
-                "          \"possibleStates\": [{" +
-                "               \"name\": \"state\"" +
-                "           }]" +
-                "       }]," +
-                "       \"items\": [{" +
-                "           \"name\": \"item\"" +
-                "       }]," +
-                "       \"descriptorDependencyNodes\": null" +
-                "   }" +
+                "   \"descriptors\": [{" +
+                "      \"id\":\"discrete desc\"," +
+                "      \"name\":\"discrete desc\"," +
+                "      \"possibleStates\": [{" +
+                "           \"name\": \"state\"" +
+                "       }]" +
+                "   }]," +
+                "   \"items\": [{" +
+                "       \"name\": \"item\"" +
+                "   }]," +
+                "   \"descriptorDependencyNodes\": null" +
                 "}";
 
         // when / then
-        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(DATASET_BASE_URI + "/kurwa").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
 
         final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
@@ -81,8 +78,6 @@ public class DatasetDeserializationIntegrationTest {
         // given
         //language=JSON
         final String json = "{" +
-                "   \"id\":\"kurwa\"," +
-                "   \"dataset\": {" +
                 "       \"descriptors\": [{" +
                 "          \"id\":\"discrete desc\"," +
                 "          \"name\":\"discrete desc\"," +
@@ -91,12 +86,11 @@ public class DatasetDeserializationIntegrationTest {
                 "           }]" +
                 "       }]," +
                 "       \"descriptorDependencyNodes\": null" +
-                "   }" +
                 "}";
 
 
         // when / then
-        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(DATASET_BASE_URI + "/kurwa").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
 
 
@@ -113,18 +107,15 @@ public class DatasetDeserializationIntegrationTest {
         // given
         //language=JSON
         final String json = "{" +
-                "   \"id\":\"kurwa\"," +
-                "   \"dataset\": {" +
                 "       \"items\": [{" +
                 "           \"name\": \"item\"" +
                 "       }]," +
                 "       \"descriptorDependencyNodes\": null" +
-                "   }" +
                 "}";
 
 
         // when / then
-        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(DATASET_BASE_URI + "/kurwa").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
 
 
@@ -140,8 +131,6 @@ public class DatasetDeserializationIntegrationTest {
         // given
         //language=JSON
         final String json = "{" +
-                "   \"id\":\"kurwa\"," +
-                "   \"dataset\": {" +
                 "       \"descriptors\": [{" +
                 "          \"id\":\"discrete desc\"," +
                 "          \"name\":\"discrete desc\"," +
@@ -151,11 +140,10 @@ public class DatasetDeserializationIntegrationTest {
                 "           \"name\": \"item\"" +
                 "       }]," +
                 "       \"descriptorDependencyNodes\": null" +
-                "   }" +
                 "}";
 
         // when / then
-        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(DATASET_BASE_URI + "/kurwa").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
 
         final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
@@ -178,8 +166,6 @@ public class DatasetDeserializationIntegrationTest {
         // given
         //language=JSON
         final String json = "{" +
-                "   \"id\":\"kurwa\"," +
-                "   \"dataset\": {" +
                 "       \"descriptors\": [{" +
                 "          \"id\":\"discrete desc\"," +
                 "          \"name\":\"discrete desc\"," +
@@ -189,11 +175,10 @@ public class DatasetDeserializationIntegrationTest {
                 "           \"name\": \"item\"" +
                 "       }]," +
                 "       \"descriptorDependencyNodes\": null" +
-                "   }" +
                 "}";
 
         // when / then
-        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(DATASET_BASE_URI + "/kurwa").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
 
         final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
@@ -215,8 +200,6 @@ public class DatasetDeserializationIntegrationTest {
 
         //language=JSON
         final String json = "{" +
-                "   \"id\":\"kurwa\"," +
-                "   \"dataset\": {" +
                 "       \"descriptors\": [{" +
                 "          \"id\":\"discrete desc\"," +
                 "          \"name\":\"discrete desc\"" +
@@ -225,11 +208,10 @@ public class DatasetDeserializationIntegrationTest {
                 "           \"name\": \"item\"" +
                 "       }]," +
                 "       \"descriptorDependencyNodes\": null" +
-                "   }" +
                 "}";
 
         // when / then
-        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(DATASET_BASE_URI + "/kurwa").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }
 
@@ -238,8 +220,6 @@ public class DatasetDeserializationIntegrationTest {
         // given
         //language=JSON
         final String json = "{" +
-                "   \"id\":\"kurwa\"," +
-                "   \"dataset\": {" +
                 "       \"descriptors\": [{" +
                 "          \"discrete\": true," +
                 "          \"id\":\"discrete desc\"," +
@@ -249,11 +229,10 @@ public class DatasetDeserializationIntegrationTest {
                 "           \"name\": \"item\"" +
                 "       }]," +
                 "       \"descriptorDependencyNodes\": null" +
-                "   }" +
                 "}";
 
         // when / then
-        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(DATASET_BASE_URI + "/kurwa").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
@@ -262,8 +241,6 @@ public class DatasetDeserializationIntegrationTest {
         // given
         //language=JSON
         final String json = "{" +
-                "   \"id\":\"kurwa\"," +
-                "   \"dataset\": {" +
                 "       \"descriptors\": [{" +
                 "          \"possibleStates\": null," +
                 "          \"id\":\"discrete desc\"," +
@@ -273,11 +250,10 @@ public class DatasetDeserializationIntegrationTest {
                 "           \"name\": \"item\"" +
                 "       }]," +
                 "       \"descriptorDependencyNodes\": null" +
-                "   }" +
                 "}";
 
         // when / then
-        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(DATASET_BASE_URI + "/kurwa").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
 
         final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
