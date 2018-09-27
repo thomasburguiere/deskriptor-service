@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -19,22 +20,15 @@ public class DescriptorDeserializer extends JsonDeserializer<Descriptor> {
 
     private static final String POSSIBLE_STATES = "possibleStates";
 
-    @Override
-    public Descriptor deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException, JsonProcessingException {
-
-        final JsonNode descriptorNode = p.getCodec().readTree(p);
-        if (isDiscreteDescriptor(descriptorNode)) {
-            return DiscreteDescriptor.builder()
-                    .withId(descriptorNode.get("id").asText())
-                    .withName(descriptorNode.get("name").asText())
-                    .withPossibleStates(deserializeStates(descriptorNode))
-                    .build();
-
+    private static boolean isDiscreteDescriptor(final JsonNode descriptorJsonNode) {
+        final JsonNode discreteNode = descriptorJsonNode.get("discrete");
+        if (discreteNode == null) {
+            return isDiscreteDescriptorBasedOnPossibleStatesPresence(descriptorJsonNode); // fallback
         }
-        throw new IllegalArgumentException("unable to infer Descriptor concrete type from json content");
+        return discreteNode.asBoolean();
     }
 
-    private static boolean isDiscreteDescriptor(final JsonNode descriptorJsonNode) {
+    private static boolean isDiscreteDescriptorBasedOnPossibleStatesPresence(final JsonNode descriptorJsonNode) {
         return descriptorJsonNode.get(POSSIBLE_STATES) != null;
     }
 
@@ -55,5 +49,20 @@ public class DescriptorDeserializer extends JsonDeserializer<Descriptor> {
             states.add(State.fromName(statesArrayNode.get(i).get("name").asText()));
         }
         return states;
+    }
+
+    @Override
+    public Descriptor deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException, JsonProcessingException {
+
+        final JsonNode descriptorNode = p.getCodec().readTree(p);
+        if (isDiscreteDescriptor(descriptorNode)) {
+            return DiscreteDescriptor.builder()
+                    .withId(descriptorNode.get("id").asText())
+                    .withName(descriptorNode.get("name").asText())
+                    .withPossibleStates(deserializeStates(descriptorNode))
+                    .build();
+
+        }
+        throw new JsonMappingException(p, "unable to infer Descriptor concrete type from json content");
     }
 }

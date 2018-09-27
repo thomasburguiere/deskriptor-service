@@ -240,4 +240,57 @@ public class DatasetDocumentControllerIntegrationTest {
         mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }
+
+    @Test
+    public void should_be_able_to_infer_descriptor_concrete_type_based_on_flag() throws Exception {// given
+        final String json = "{" +
+                "   \"id\":\"kurwa\"," +
+                "   \"dataset\": {" +
+                "       \"descriptors\": [{" +
+                "          \"discrete\": true," +
+                "          \"id\":\"discrete desc\"," +
+                "          \"name\":\"discrete desc\"" +
+                "       }]," +
+                "       \"items\": [{" +
+                "           \"name\": \"item\"" +
+                "       }]," +
+                "       \"descriptorDependencyNodes\": null" +
+                "   }" +
+                "}";
+
+        // when / then
+        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void should_return_be_able_to_infer_descriptor_concrete_type_based_on_presence_of_states() throws Exception {// given
+        final String json = "{" +
+                "   \"id\":\"kurwa\"," +
+                "   \"dataset\": {" +
+                "       \"descriptors\": [{" +
+                "          \"possibleStates\": null," +
+                "          \"id\":\"discrete desc\"," +
+                "          \"name\":\"discrete desc\"" +
+                "       }]," +
+                "       \"items\": [{" +
+                "           \"name\": \"item\"" +
+                "       }]," +
+                "       \"descriptorDependencyNodes\": null" +
+                "   }" +
+                "}";
+
+        // when / then
+        mockMvc.perform(post(DATASET_BASE_URI + "/").content(json).contentType(APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
+
+        final DatasetDocument datasetDocument = datasetDocumentRepository.findById("kurwa").get();
+        assertThat(datasetDocument.getDataset().getDescriptors()).isNotNull();
+        assertThat(datasetDocument.getDataset().getDescriptors()).isNotEmpty();
+
+        final DiscreteDescriptor descr = (DiscreteDescriptor) datasetDocument.getDataset().getDescriptors().iterator().next();
+        assertThat(descr.getId()).isEqualTo("discrete desc");
+        assertThat(descr.getName()).isEqualTo("discrete desc");
+        assertThat(descr.getPossibleSates()).hasSize(0);
+    }
 }

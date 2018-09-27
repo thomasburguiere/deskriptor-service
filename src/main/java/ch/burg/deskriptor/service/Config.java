@@ -22,4 +22,5 @@ public class Config {
         simpleModule.addDeserializer(Descriptor.class, new DescriptorDeserializer());
         objectMapper.registerModule(simpleModule);
         return objectMapper;
-    }}
+    }
+}

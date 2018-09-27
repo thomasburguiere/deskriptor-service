@@ -31,7 +31,7 @@ public class DatasetDocumentController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> post(@RequestBody final DatasetDocument datasetDocument){
+    public ResponseEntity<Void> post(@RequestBody final DatasetDocument datasetDocument) {
         datasetDocumentRepository.save(datasetDocument);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
