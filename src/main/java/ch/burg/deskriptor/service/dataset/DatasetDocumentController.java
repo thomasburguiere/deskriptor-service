@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/dataset")
 public class DatasetDocumentController {
+
     private final DatasetDocumentRepository datasetDocumentRepository;
 
     public DatasetDocumentController(final DatasetDocumentRepository datasetDocumentRepository) {
@@ -26,8 +31,14 @@ public class DatasetDocumentController {
     }
 
     @GetMapping(value = "/{datasetId}")
-    public DatasetDocument get(@PathVariable final String datasetId) {
-        return datasetDocumentRepository.findById(datasetId).get();
+    public ResponseEntity<DatasetDocument> get(@PathVariable final String datasetId) {
+        final Optional<DatasetDocument> datasetDocumentOptional = datasetDocumentRepository.findById(datasetId);
+
+        if (!datasetDocumentOptional.isPresent()) {
+            return new ResponseEntity<>(NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(datasetDocumentOptional.get(), OK);
     }
 
     @PostMapping
