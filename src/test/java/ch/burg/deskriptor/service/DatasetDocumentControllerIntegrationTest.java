@@ -54,6 +54,7 @@ public class DatasetDocumentControllerIntegrationTest {
     @Test
     public void should_post_and_deserialize_dataset_correctly() throws Exception {
         // given
+        //language=JSON
         final String json = "{" +
                 "   \"id\":\"kurwa\"," +
                 "   \"dataset\": {" +
@@ -93,6 +94,7 @@ public class DatasetDocumentControllerIntegrationTest {
     @Test
     public void should_deserialize_dataset_with_no_items() throws Exception {
         // given
+        //language=JSON
         final String json = "{" +
                 "   \"id\":\"kurwa\"," +
                 "   \"dataset\": {" +
@@ -124,6 +126,7 @@ public class DatasetDocumentControllerIntegrationTest {
     @Test
     public void should_deserialize_dataset_with_no_descriptors() throws Exception {
         // given
+        //language=JSON
         final String json = "{" +
                 "   \"id\":\"kurwa\"," +
                 "   \"dataset\": {" +
@@ -150,6 +153,7 @@ public class DatasetDocumentControllerIntegrationTest {
     @Test
     public void should_deserialize_dataset_with_discreteDescriptors_with_empty_states() throws Exception {
         // given
+        //language=JSON
         final String json = "{" +
                 "   \"id\":\"kurwa\"," +
                 "   \"dataset\": {" +
@@ -187,6 +191,7 @@ public class DatasetDocumentControllerIntegrationTest {
     @Test
     public void should_deserialize_dataset_with_discreteDescriptors_with_null_states() throws Exception {
         // given
+        //language=JSON
         final String json = "{" +
                 "   \"id\":\"kurwa\"," +
                 "   \"dataset\": {" +
@@ -222,6 +227,8 @@ public class DatasetDocumentControllerIntegrationTest {
 
     @Test
     public void should_return_400_when_unable_to_infer_descriptor_concrete_type_from_json_content() throws Exception {// given
+
+        //language=JSON
         final String json = "{" +
                 "   \"id\":\"kurwa\"," +
                 "   \"dataset\": {" +
@@ -242,7 +249,9 @@ public class DatasetDocumentControllerIntegrationTest {
     }
 
     @Test
-    public void should_be_able_to_infer_descriptor_concrete_type_based_on_flag() throws Exception {// given
+    public void should_be_able_to_infer_descriptor_concrete_type_based_on_flag() throws Exception {
+        // given
+        //language=JSON
         final String json = "{" +
                 "   \"id\":\"kurwa\"," +
                 "   \"dataset\": {" +
@@ -264,7 +273,9 @@ public class DatasetDocumentControllerIntegrationTest {
     }
 
     @Test
-    public void should_return_be_able_to_infer_descriptor_concrete_type_based_on_presence_of_states() throws Exception {// given
+    public void should_return_be_able_to_infer_descriptor_concrete_type_based_on_presence_of_states() throws Exception {
+        // given
+        //language=JSON
         final String json = "{" +
                 "   \"id\":\"kurwa\"," +
                 "   \"dataset\": {" +
