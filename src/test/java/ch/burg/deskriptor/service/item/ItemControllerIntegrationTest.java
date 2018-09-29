@@ -24,9 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ItemControllerIntegrationTest {
 
-
-    private static final String ITEM_BASE_URI = "/item";
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -56,10 +53,34 @@ public class ItemControllerIntegrationTest {
         datasetDocumentRepository.save(datasetDocument);
 
         // when / then
-        mockMvc.perform(get(ITEM_BASE_URI + "/dataset/" + datasetId + "/list"))
+        mockMvc.perform(get("/dataset/" + datasetId + "/items"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1));
+    }
+
+    @Test
+    public void should_find_item_in_dataset() throws Exception {
+        // given
+        final String datasetId = "datasetId";
+        final String itemId = "itemId";
+
+        final Dataset dataset = Dataset
+                .builder()
+                .items(Set.of(Item
+                        .builder()
+                        .withId(itemId)
+                        .withName("itemName")
+                        .build())
+                ).build();
+
+        final DatasetDocument datasetDocument = new DatasetDocument(dataset, datasetId);
+        datasetDocumentRepository.save(datasetDocument);
+
+        // when / then
+        mockMvc.perform(get("/dataset/datasetId/item/" + itemId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value("itemId"));
     }
 
 }
