@@ -1,8 +1,6 @@
-package ch.burg.deskriptor.service;
+package ch.burg.deskriptor.service.dataset;
 
 import ch.burg.deskriptor.engine.model.descriptor.DiscreteDescriptor;
-import ch.burg.deskriptor.service.dataset.DatasetDocument;
-import ch.burg.deskriptor.service.dataset.DatasetDocumentRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

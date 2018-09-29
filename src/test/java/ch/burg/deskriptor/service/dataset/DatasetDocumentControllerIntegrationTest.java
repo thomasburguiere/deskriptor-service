@@ -1,8 +1,6 @@
-package ch.burg.deskriptor.service;
+package ch.burg.deskriptor.service.dataset;
 
 import ch.burg.deskriptor.engine.model.Dataset;
-import ch.burg.deskriptor.service.dataset.DatasetDocument;
-import ch.burg.deskriptor.service.dataset.DatasetDocumentRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +52,7 @@ public class DatasetDocumentControllerIntegrationTest {
     public void should_return_404_when_no_dataset_document_is_found() throws Exception {
         // when / then
         mockMvc.perform(get(DATASET_BASE_URI + "/doesntExistsId"))
-            .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -66,7 +64,7 @@ public class DatasetDocumentControllerIntegrationTest {
 
         // when / then
         mockMvc.perform(get(DATASET_BASE_URI + "/datasetId"))
-            .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is2xxSuccessful());
 
     }
 
