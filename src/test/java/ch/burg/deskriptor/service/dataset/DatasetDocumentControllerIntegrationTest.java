@@ -68,4 +68,14 @@ public class DatasetDocumentControllerIntegrationTest {
 
     }
 
+    @Test
+    public void should_return_404_when_trying_to_find_non_existing_datasetDocument() throws Exception {
+        // given
+        final String datasetId = "NON_EXISTING";
+
+        // when / then
+        mockMvc.perform(get(DATASET_BASE_URI + "/" + datasetId))
+                .andExpect(status().isNotFound());
+    }
+
 }

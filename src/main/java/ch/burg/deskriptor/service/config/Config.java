@@ -1,4 +1,4 @@
-package ch.burg.deskriptor.service;
+package ch.burg.deskriptor.service.config;
 
 import ch.burg.deskriptor.engine.model.descriptor.Descriptor;
 import ch.burg.deskriptor.service.io.DescriptorDeserializer;
